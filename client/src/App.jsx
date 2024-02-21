@@ -15,6 +15,7 @@ import OnlyAdminPrivateRoute from './components/OnlyAdminPrivateRoute'
 import UpdatePost from './pages/UpdatePost'
 import PostPage from './pages/PostPage'
 import ScrollToTop from './components/ScrollToTop'
+import Search from './pages/Search'
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
       <Route path="/about" element={<About />}/>
       <Route path="/signin" element={<SignIn />}/>
       <Route path="/signup" element={<SignUp />}/>
+      <Route path="/search" element={<Search />}/>
       <Route element={<PrivateRoute />}>
       <Route path="/dashboard" element={<Dashboard />}/>
       </Route>
@@ -35,7 +37,7 @@ function App() {
        <Route path='/update-post/:postId' element={<UpdatePost />} />
    </Route>   
 
-      <Route path="/projects" element={<Projects />}/>
+      {/* <Route path="/projects" element={<Projects />}/> */}
       <Route path="/post/:postSlug" element={<PostPage />}/>
       <Route path="/*" element={<NotFound />}/>
     

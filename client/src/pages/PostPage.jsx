@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import CommentSection from '../components/CommentSection';
+import PostCard from '../components/PostCard';
 
 export default function PostPage() {
     const {postSlug}=useParams();
     const[error,setError]=useState(false);
     const[loading,setLoading]=useState(true);
     const[post,setPost]=useState(null);
+    const[recentPost,setRecentPost]=useState(null);
     // console.log(postSlug);
     // console.log(post);
 useEffect(()=>{
@@ -35,6 +37,22 @@ useEffect(()=>{
     }
     fetchPost();
 },[postSlug]);
+
+ useEffect(()=>{
+     const fetchRecentPost = async()=>{
+          try{
+        const res = await fetch(`/api/post/getposts?limit=3`);
+        const data = await res.json();
+        if(res.ok){
+            setRecentPost(data.posts); 
+        }
+    }
+    catch(err){
+        console.log(err.message);
+    }
+    }
+    fetchRecentPost();
+ },[]);
 
 if(loading){
    return  <div className='flex justify-center items-center min-h-screen' >
@@ -76,7 +94,9 @@ if(loading){
                     Recent Articles
                 </h1>
                 <div className='flex flex-wrap gap-5 mt-5 justify-center'>
-                    {'recent posts'}
+                     {recentPost && recentPost.map((post)=>(
+                        <PostCard key={post._id} post={post} />
+                     ))}
                 </div>
             </div>
             
